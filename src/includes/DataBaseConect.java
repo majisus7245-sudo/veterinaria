@@ -128,6 +128,10 @@ public class DataBaseConect {
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_recibosPago_consulta') "
 				+ "alter table recibosPago add constraint fk_recibosPago_consulta FOREIGN KEY (consulta) references consultas (id)");
 		
+		//Usuarios de prueba
+		sqlStatements.add("insert into usuarios(id, nombre, password, rol) values (1, 'Recepcion', 'password', '1')\r\n"
+				+ "insert into usuarios(id, nombre, password, rol) values (2, 'Veterinario', 'password', '2')");
+		
 
 		// Ejecutar todas las sentencias en orden
 		try (Statement stmt = conn.createStatement()) {

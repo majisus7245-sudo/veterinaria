@@ -18,6 +18,10 @@ public class Usuario {
 		this.rol = rol;
 		this.estado = estado;
 	}
+	
+	public boolean revisarPassword(String password) {
+		return this.password == password;
+	}
 
 	public void setId(int id) {
 		this.id = id;
