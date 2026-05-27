@@ -1,4 +1,4 @@
-package _public;
+package main;
 
 import includes.DataBaseConect;
 

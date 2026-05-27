@@ -7,10 +7,14 @@ public class Usuario {
 	
 	public Usuario() {}
 	
-	public Usuario(int id, String nombre, String password, String rol, String estado) {
-		this.id = id;
+	public Usuario(String nombre, String password) {
 		this.nombre = nombre;
 		this.password = password;
+	}
+	
+	public Usuario(int id, String nombre, String password, String rol, String estado) {
+		this(nombre, password);
+		this.id = id;
 		this.rol = rol;
 		this.estado = estado;
 	}
@@ -54,7 +58,5 @@ public class Usuario {
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-	
-	
 
 }

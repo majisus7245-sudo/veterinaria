@@ -121,12 +121,13 @@ public class DataBaseConect {
 
 		// 7. Tabla RecibosPago
 		sqlStatements.add("IF OBJECT_ID('recibosPago', 'U') IS NULL CREATE TABLE recibosPago("
-				+ "id int identity not null, mascota int not null, precio numeric(12,2) not null, "
+				+ "id int identity not null, consulta int not null, precio numeric(12,2) not null, "
 				+ "fecha date default(FORMAT(GETDATE(), 'yyyy/MM/dd')))");
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'pk_recibosPago') "
 				+ "ALTER TABLE recibosPago add constraint pk_recibosPago PRIMARY KEY (id)");
-		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_recibosPago_mascotas') "
-				+ "ALTER TABLE recibosPago add constraint fk_recibosPago_mascotas FOREIGN KEY (mascota) references mascotas (id)");
+		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_recibosPago_consulta') "
+				+ "alter table recibosPago add constraint fk_recibosPago_consulta FOREIGN KEY (consulta) references consultas (id)");
+		
 
 		// Ejecutar todas las sentencias en orden
 		try (Statement stmt = conn.createStatement()) {
