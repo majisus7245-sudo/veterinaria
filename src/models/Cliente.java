@@ -1,11 +1,16 @@
 package models;
 
+import classes.Lista;
+
 public class Cliente {
 	
 	private int id;
 	private String nombre, domicilio, celCasa, celPersonal, email, estado;
+	private Lista<Mascota> contenedorMascotas;
 	
-	public Cliente() {}
+	public Cliente() {
+		contenedorMascotas = new Lista();
+	}
 	
 	public Cliente(int id, String nombre, String domicilio, String celCasa, String celPersonal, String email, String estado) {
 		this.id = id;
@@ -17,13 +22,16 @@ public class Cliente {
 		this.estado = estado;
 	}
 	
-	public void setDatos(String nombre, String domicilio, String celCasa, String celPersonal, String email, String estado) {
+	public void setDatos(String nombre, String domicilio, String celCasa, String celPersonal, String email) {
 		this.nombre = nombre;
 		this.domicilio = domicilio;
 		this.celCasa = celCasa;
 		this.celPersonal = celPersonal;
 		this.email = email;
-		this.estado = estado;
+	}
+	
+	public String getValues() {
+		return nombre + ", " + domicilio + ", " + ((celCasa.isBlank()) ? "" : celCasa) + ", " + celPersonal + ", " + email;
 	}
 
 	public int getId() {

@@ -4,10 +4,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataBaseConect {
+public class DataBase {
 	
-	private static String msg;
+	protected static String msg;
 	private static Connection conn;
+	protected String columna;
+	protected static String [] columnas;
 	
 	public static boolean Connect() {
 		if(!connectdb())

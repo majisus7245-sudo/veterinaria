@@ -1,5 +1,8 @@
 package models;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Usuario {
 	
 	private int id;
@@ -13,8 +16,9 @@ public class Usuario {
 	}
 	
 	public Usuario(int id, String nombre, String password, String rol, String estado) {
-		this(nombre, password);
 		this.id = id;
+		this.nombre = nombre;
+		this.password = password;
 		this.rol = rol;
 		this.estado = estado;
 	}

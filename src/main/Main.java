@@ -1,12 +1,12 @@
 package main;
 
-import includes.DataBaseConect;
+import includes.DataBase;
 
 public class Main {
 
 	public static void main(String[] args) {
-		if(!DataBaseConect.Connect())
-			System.out.println(DataBaseConect.getMsg());
+		if(!DataBase.Connect())
+			System.out.println(DataBase.getMsg());
 		else 
 			System.out.println("Conexion exitosa");
 	}
