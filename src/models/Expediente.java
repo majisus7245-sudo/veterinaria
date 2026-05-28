@@ -1,22 +1,33 @@
 package models;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import classes.Lista;
+import includes.BD_consultas;
 
 public class Expediente {
 
-	private int id, mascota;
-	private String fechaCreacion;
+	private int id;
+	private String fecha;
 	private Lista<Consulta> contenedorConsultas;
 	
-	public Expediente(int id, int mascota, String fechaCreacion) {
-		this.id = id;
-		this.mascota = mascota;
-		this.fechaCreacion = fechaCreacion;
+	public Expediente() {
+		contenedorConsultas = new Lista();
+		fecha = date();
 	}
 	
-	public Expediente(int mascota, String fechaCreacion) {
-		this.mascota = mascota;
-		this.fechaCreacion = fechaCreacion;
+	public String date() {
+		LocalDate fechaActual = LocalDate.now();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return fechaActual.format(formato);
+	}
+	
+	public Expediente(int id, String fechaCreacion) {
+		this.id = id;
+		this.fecha = fechaCreacion;
+		
+		contenedorConsultas = BD_consultas.whereAll("expediente", this.id + "");
 	}
 
 	public int getId() {
@@ -27,20 +38,12 @@ public class Expediente {
 		this.id = id;
 	}
 
-	public int getMascota() {
-		return mascota;
-	}
-
-	public void setMascota(int mascota) {
-		this.mascota = mascota;
-	}
-
-	public String getFechaCreacion() {
-		return fechaCreacion;
+	public String getFecha() {
+		return fecha;
 	}
 
 	public void setFechaCreacion(String fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
+		this.fecha = fechaCreacion;
 	}
 
 	public Lista<Consulta> getContenedorConsultas() {
@@ -49,6 +52,10 @@ public class Expediente {
 
 	public void setContenedorConsultas(Lista<Consulta> contenedorConsultas) {
 		this.contenedorConsultas = contenedorConsultas;
+	}
+
+	public String getValues() {
+		return fecha;
 	}
 	
 	

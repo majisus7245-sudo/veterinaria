@@ -6,70 +6,79 @@ import java.sql.Statement;
 
 import classes.Lista;
 import models.Cliente;
-import models.Usuario;
+import models.Mascota;
 
-public class BD_clientes extends DataBase{
+public class BD_mascota {
 	
 	private static String msg;
-	private static String tabla = "clientes";
-	private static String columnas = "nombre, domicilio, celCasa, celPersonal, email";
+	private static String tabla = "mascotas";
+	private static String columnas = "cliente, expediente, nombre, raza, tipo, sexo, edad, peso, color";
 	
-	public static Lista<Cliente> all() {
-		Lista<Cliente> clientes = new Lista();
+	public static Lista<Mascota> all() {
+		Lista<Mascota> mascota = new Lista();
 		try {
 			String sql = "Select * From " + tabla;
 			Statement stmt = DataBase.getConn().createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) {
-				System.out.println("ID: " + rs.getInt(1) + " usuario " + rs.getString(2));
-				clientes.InsertarFinal(
-						new Cliente(
+				mascota.InsertarFinal(
+						new Mascota(
 								rs.getInt(1),
-								rs.getString(2),
-								rs.getString(3),
-								rs.getString(4), 
-								rs.getString(5), 
+								rs.getInt(2),
+								rs.getInt(3),
+								rs.getString(4),
+								rs.getString(5),
 								rs.getString(6), 
-								rs.getString(7)
+								rs.getString(7), 
+								rs.getString(8), 
+								rs.getString(9),
+								rs.getString(10),
+								rs.getString(11)
 								)
 						);
 			}
-			return clientes;
+			return mascota;
 		} catch (SQLException e) {
 			msg = e.getMessage();
-			return clientes;
+			return mascota;
 		}
 	}
 	
-	public static Cliente where(String columna, String valor) {
-		Cliente cliente = null;
+	public static Lista<Mascota> whereAll(String columna, String valor) {
+		Lista<Mascota> mascotas = null;
 		try {
 			String sql = "Select top 1 * From " + tabla + " where " + columna + " = '" + valor + "'";
 	        
 	        Statement stmt = DataBase.getConn().createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
 	        
-	        if (rs.next()) {
-	        	cliente = new Cliente(
-	        			rs.getInt(1),
-						rs.getString(2),
-						rs.getString(3),
-						rs.getString(4), 
-						rs.getString(5), 
-						rs.getString(6), 
-						rs.getString(7)
-	            );
-	        }
-			return cliente;
+	        while(rs.next()) {
+				mascotas.InsertarFinal(
+						new Mascota(
+								rs.getInt(1),
+								rs.getInt(2),
+								rs.getInt(3),
+								rs.getString(4),
+								rs.getString(5),
+								rs.getString(6), 
+								rs.getString(7), 
+								rs.getString(8), 
+								rs.getString(9),
+								rs.getString(10),
+								rs.getString(11)
+								)
+						);
+			}
+			return mascotas;
 		} catch (SQLException e) {
 			msg = e.getMessage();
-			return cliente;
+			return mascotas;
 		}
 	}
 	
-	public static boolean insert(Cliente cliente) {
+	public static boolean insert(Mascota mascota) {
 		try {
-			String sql = "insert into " + tabla + " (" + columnas + ") values ("+ cliente.getValues() +")";
+			String sql = "insert into " + tabla + " (" + columnas + ") values ("+ mascota.getValues() +")";
 			
 			Statement stmt = DataBase.getConn().createStatement();
 	        ResultSet rs = stmt.executeQuery(sql);
@@ -98,4 +107,5 @@ public class BD_clientes extends DataBase{
 		}
 	}
 	
+
 }

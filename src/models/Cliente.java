@@ -1,6 +1,7 @@
 package models;
 
 import classes.Lista;
+import includes.BD_mascota;
 
 public class Cliente {
 	
@@ -20,6 +21,8 @@ public class Cliente {
 		this.celPersonal = celPersonal;
 		this.email = email;
 		this.estado = estado;
+		
+		contenedorMascotas = BD_mascota.whereAll("cliente", this.id + "");
 	}
 	
 	public void setDatos(String nombre, String domicilio, String celCasa, String celPersonal, String email) {
@@ -28,6 +31,12 @@ public class Cliente {
 		this.celCasa = celCasa;
 		this.celPersonal = celPersonal;
 		this.email = email;
+	}
+	
+	public void nuevaMascota(String nombre, String raza, String tipo, String sexo, String edad, String peso, String color) {
+		Mascota mascota = new Mascota(getId(), nombre, raza, tipo, sexo, edad, peso, color);
+		
+		contenedorMascotas.InsertarFinal(mascota);
 	}
 	
 	public String getValues() {

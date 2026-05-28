@@ -2,7 +2,7 @@ package models;
 
 public class Consulta {
 	
-	private int id, expediente, veterinario;
+	private int id, veterinario;
 	private String sintomas, diagnostico, observaciones, fecha;
 	private ReciboPago reciboPago;
 	
@@ -10,14 +10,15 @@ public class Consulta {
 		this.veterinario = veterinario;
 	}
 	
-	public Consulta(int id, int expediente, int veterinario, String sintomas, String diagnostico, String observaciones, String fecha) {
+	public Consulta(int id, int veterinario, String sintomas, String diagnostico, String observaciones, String fecha) {
 		this.id = id;
-		this.expediente = expediente;
 		this.veterinario = veterinario;
 		this.sintomas = sintomas;
 		this.diagnostico = diagnostico;
 		this.observaciones = observaciones;
 		this.fecha = fecha;
+		
+		
 	}
 	
 	public void guardarInformacion(String sintomas, String diagnostico, String observaciones) {
@@ -32,14 +33,6 @@ public class Consulta {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getExpediente() {
-		return expediente;
-	}
-
-	public void setExpediente(int expediente) {
-		this.expediente = expediente;
 	}
 
 	public int getVeterinario() {

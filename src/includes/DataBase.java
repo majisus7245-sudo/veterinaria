@@ -57,7 +57,6 @@ public class DataBase {
 	private static boolean inicializarTablas() {
 		List<String> sqlStatements = new ArrayList<>();
 
-		// 1. Tabla Usuarios
 		sqlStatements.add("IF OBJECT_ID('usuarios', 'U') IS NULL CREATE TABLE usuarios("
 				+ "id int identity not null, nombre varchar(50) not null, password varchar(60) not null, "
 				+ "rol char not null, estado char not null default '1')");
@@ -68,7 +67,6 @@ public class DataBase {
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'ck_estado') "
 				+ "ALTER TABLE usuarios add constraint ck_estado CHECK(estado IN ('0', '1'))");
 
-		// 2. Tabla Clientes
 		sqlStatements.add("IF OBJECT_ID('clientes', 'U') IS NULL CREATE TABLE clientes("
 				+ "id int identity not null, nombre varchar(50) not null, domicilio varchar(100) not null, "
 				+ "celCasa varchar(10) not null, celPersonal varchar(10) not null, email varchar(50) not null, "
@@ -77,10 +75,14 @@ public class DataBase {
 				+ "ALTER TABLE clientes add constraint pk_clientes PRIMARY KEY (id)");
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'ck_estado_clientes') "
 				+ "ALTER TABLE clientes add constraint ck_estado_clientes CHECK(estado IN ('0', '1'))");
+		
+		sqlStatements.add("IF OBJECT_ID('expediente', 'U') IS NULL CREATE TABLE expediente("
+				+ "id int identity not null,fechaCreacion date default(FORMAT(GETDATE(), 'yyyy/MM/dd')))");
+		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'pk_expediente') "
+				+ "ALTER TABLE expediente add constraint pk_expediente PRIMARY KEY (id)");
 
-		// 3. Tabla Mascotas
 		sqlStatements.add("IF OBJECT_ID('mascotas', 'U') IS NULL CREATE TABLE mascotas("
-				+ "id int identity not null, cliente int not null, nombre varchar(50) not null, "
+				+ "id int identity not null, cliente int not null, expediente int not null, nombre varchar(50) not null, "
 				+ "raza varchar(30) not null, tipo varchar(20) not null, sexo char not null, "
 				+ "edad varchar(2) not null, peso varchar(4) not null, color varchar(20) not null, "
 				+ "estado char not null default '1')");
@@ -92,8 +94,9 @@ public class DataBase {
 				+ "ALTER TABLE mascotas add constraint ck_estado_mascota CHECK(estado IN ('0', '1'))");
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_mascotas_cliente') "
 				+ "ALTER TABLE mascotas add constraint fk_mascotas_cliente FOREIGN KEY (cliente) references clientes (id)");
+		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_mascotas_expediente') "
+				+ "alter table mascotas add constraint fk_mascotas_expediente FOREIGN KEY (expediente) references expedientes (id)");
 
-		// 4. Tabla Cita
 		sqlStatements.add("IF OBJECT_ID('cita', 'U') IS NULL CREATE TABLE cita("
 				+ "id int identity not null, mascota int not null)");
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'pk_cita') "
@@ -101,15 +104,6 @@ public class DataBase {
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_cita_mascotas') "
 				+ "ALTER TABLE cita add constraint fk_cita_mascotas FOREIGN KEY (mascota) references mascotas (id)");
 
-		// 5. Tabla Expediente
-		sqlStatements.add("IF OBJECT_ID('expediente', 'U') IS NULL CREATE TABLE expediente("
-				+ "id int identity not null, mascota int not null, fechaCreacion date default(FORMAT(GETDATE(), 'yyyy/MM/dd')))");
-		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'pk_expediente') "
-				+ "ALTER TABLE expediente add constraint pk_expediente PRIMARY KEY (id)");
-		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_expediente_mascotas') "
-				+ "ALTER TABLE expediente add constraint fk_expediente_mascotas FOREIGN KEY (mascota) references mascotas (id)");
-
-		// 6. Tabla Consultas
 		sqlStatements.add("IF OBJECT_ID('consultas', 'U') IS NULL CREATE TABLE consultas("
 				+ "id int identity not null, expediente int not null, veterinario int not null, "
 				+ "sintomas varchar(255) not null, diagnostico varchar(255) not null, observaciones varchar(255) not null, "
@@ -121,7 +115,6 @@ public class DataBase {
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_consultas_veterinario') "
 				+ "ALTER TABLE consultas add constraint fk_consultas_veterinario FOREIGN KEY (veterinario) references usuarios (id)");
 
-		// 7. Tabla RecibosPago
 		sqlStatements.add("IF OBJECT_ID('recibosPago', 'U') IS NULL CREATE TABLE recibosPago("
 				+ "id int identity not null, consulta int not null, precio numeric(12,2) not null, "
 				+ "fecha date default(FORMAT(GETDATE(), 'yyyy/MM/dd')))");
@@ -130,7 +123,6 @@ public class DataBase {
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_recibosPago_consulta') "
 				+ "alter table recibosPago add constraint fk_recibosPago_consulta FOREIGN KEY (consulta) references consultas (id)");
 		
-		//Usuarios de prueba
 		sqlStatements.add("insert into usuarios(id, nombre, password, rol) values (1, 'Recepcion', 'password', '1')\r\n"
 				+ "insert into usuarios(id, nombre, password, rol) values (2, 'Veterinario', 'password', '2')");
 		
