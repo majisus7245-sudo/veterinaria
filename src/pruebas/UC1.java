@@ -17,11 +17,7 @@ public class UC1 {
 		controlador.inciarRegistro();
 		System.out.println("Registro iniciado");
 		
-		if(!controlador.datosCliente("Pedrito", "Culiacan", "1234567890", "1234567890", "correo@correo.com")) {
-			System.out.println("no se guardo");
-			return;
-		}
-		
+		controlador.datosCliente("Pedrito", "Culiacan", "1234567890", "1234567890", "correo@correo.com");
 		controlador.registrarMascota("perro", "buldoser", "perro", "M", "2", "4", "negro");
 		
 		Cliente cliente = BD_clientes.where("nombre", "pedrito");

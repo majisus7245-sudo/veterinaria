@@ -22,7 +22,7 @@ public class Cliente {
 		this.email = email;
 		this.estado = estado;
 		
-		System.out.println(getValues());
+		System.out.println("Cliente -> " + getValues());
 		
 		contenedorMascotas = BD_mascota.whereAll("cliente", this.id + "");
 		

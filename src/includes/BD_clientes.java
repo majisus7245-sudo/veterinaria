@@ -72,7 +72,6 @@ public class BD_clientes extends DataBase {
     public static boolean insert(Cliente cliente) {
         String sql = "INSERT INTO " + tabla + " (" + columnas + ") VALUES ("+ cliente.getValues() +")";
         
-        System.out.println(sql);
         try (Statement stmt = DataBase.getConn().createStatement()) {
             int rowsAffected = stmt.executeUpdate(sql);
             

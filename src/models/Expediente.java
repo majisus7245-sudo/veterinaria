@@ -27,7 +27,7 @@ public class Expediente {
 		this.id = id;
 		this.fecha = fechaCreacion;
 		
-		System.out.println(getValues());
+		System.out.println("Expediente -> " + getValues());
 		
 		contenedorConsultas = BD_consultas.whereAll("expediente", this.id + "");
 	}

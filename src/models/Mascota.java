@@ -21,7 +21,7 @@ public class Mascota {
 		
 		expediente = new Expediente();
 		
-		System.out.println(getValues());
+		System.out.println("Mascota -> " +getValues());
 		
 		BD_expediente.insert(expediente);
 		expediente.setId(BD_expediente.count());
