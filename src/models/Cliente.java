@@ -40,10 +40,15 @@ public class Cliente {
 		Mascota mascota = new Mascota(getId(), nombre, raza, tipo, sexo, edad, peso, color);
 		
 		contenedorMascotas.InsertarFinal(mascota);
+		
+		if(!BD_mascota.insert(mascota)) {
+			System.out.println("no se guardo la mascota");
+			
+		}
 	}
 	
 	public String getValues() {
-		return nombre + ", " + domicilio + ", " + ((celCasa.isBlank()) ? "" : celCasa) + ", " + celPersonal + ", " + email;
+		return "'" +  nombre + "', '" + domicilio + "', '" + ((celCasa.isBlank()) ? "" : celCasa) + "', '" + celPersonal + "', '" + email + "'";
 	}
 
 	public int getId() {

@@ -18,7 +18,6 @@ public class BD_mascota {
         Lista<Mascota> mascota = new Lista<>();
         String sql = "SELECT * FROM " + tabla;
         
-        // Using try-with-resources to prevent memory/cursor leaks
         try (Statement stmt = DataBase.getConn().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
              
@@ -68,7 +67,7 @@ public class BD_mascota {
     
     public static boolean insert(Mascota mascota) {
         String sql = "INSERT INTO " + tabla + " (" + columnas + ") VALUES ("+ mascota.getValues() +")";
-        
+
         try (Statement stmt = DataBase.getConn().createStatement()) {
             
             int rowsAffected = stmt.executeUpdate(sql);

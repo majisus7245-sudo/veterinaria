@@ -57,7 +57,7 @@ public class Expediente {
 	}
 
 	public String getValues() {
-		return fecha;
+		return "'" + fecha + "'";
 	}
 	
 	

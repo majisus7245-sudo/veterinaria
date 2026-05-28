@@ -1,6 +1,7 @@
 package models;
 
 import includes.BD_expediente;
+import includes.BD_mascota;
 
 public class Mascota {
 	
@@ -24,6 +25,7 @@ public class Mascota {
 		
 		BD_expediente.insert(expediente);
 		expediente.setId(BD_expediente.count());
+		
 	}
 	
 	public Mascota(int id, int cliente, int expediente, String nombre, String raza, String tipo, String sexo, String edad, String peso, String color, String estado) {
@@ -131,7 +133,7 @@ public class Mascota {
 	}
 
 	public String getValues() {
-		return cliente + ", " + expediente.getId() + ", " + nombre + ", " + raza + ", " + tipo + ", " + sexo + ", " + edad + ", " + peso + ", " + color;
+		return "'" + cliente + "', '" + expediente.getId() + "', '" + nombre +"', '" + raza + "', '" + tipo + "', '" + sexo + "', '" + edad + "', '" + peso + "', '" + color + "'";
 	}
 	
 	
