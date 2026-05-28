@@ -22,7 +22,10 @@ public class Cliente {
 		this.email = email;
 		this.estado = estado;
 		
+		System.out.println(getValues());
+		
 		contenedorMascotas = BD_mascota.whereAll("cliente", this.id + "");
+		
 	}
 	
 	public void setDatos(String nombre, String domicilio, String celCasa, String celPersonal, String email) {
@@ -99,6 +102,8 @@ public class Cliente {
 		this.estado = estado;
 	}
 	
-	
+	public String toString() {
+		return id + " " + nombre;
+	}
 
 }

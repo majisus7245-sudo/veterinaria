@@ -95,7 +95,7 @@ public class DataBase {
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_mascotas_cliente') "
 				+ "ALTER TABLE mascotas add constraint fk_mascotas_cliente FOREIGN KEY (cliente) references clientes (id)");
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_mascotas_expediente') "
-				+ "alter table mascotas add constraint fk_mascotas_expediente FOREIGN KEY (expediente) references expedientes (id)");
+				+ "alter table mascotas add constraint fk_mascotas_expediente FOREIGN KEY (expediente) references expediente (id)");
 
 		sqlStatements.add("IF OBJECT_ID('cita', 'U') IS NULL CREATE TABLE cita("
 				+ "id int identity not null, mascota int not null)");
@@ -123,8 +123,9 @@ public class DataBase {
 		sqlStatements.add("IF NOT EXISTS (SELECT * FROM sys.objects WHERE name = 'fk_recibosPago_consulta') "
 				+ "alter table recibosPago add constraint fk_recibosPago_consulta FOREIGN KEY (consulta) references consultas (id)");
 		
-		sqlStatements.add("insert into usuarios(id, nombre, password, rol) values (1, 'Recepcion', 'password', '1')\r\n"
-				+ "insert into usuarios(id, nombre, password, rol) values (2, 'Veterinario', 'password', '2')");
+		sqlStatements.add(" IF NOT EXISTS (SELECT count(*) FROM usuarios) begin "
+				+ "insert into usuarios(nombre, password, rol) values ('Recepcion', 'password', '1')\r\n"
+				+ "insert into usuarios(nombre, password, rol) values ('Veterinario', 'password', '2') end");
 		
 
 		// Ejecutar todas las sentencias en orden

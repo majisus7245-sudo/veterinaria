@@ -82,7 +82,5 @@ public class Consulta {
 	public void setReciboPago(ReciboPago reciboPago) {
 		this.reciboPago = reciboPago;
 	}
-	
-	
 
 }

@@ -11,11 +11,16 @@ public class RegistroController {
 		cliente = new Cliente();
 	}
 	
-	public void datosCliente(String nombre, String domicilio, String celCasa, String celPersonal, String email) {
+	public boolean datosCliente(String nombre, String domicilio, String celCasa, String celPersonal, String email) {
 		cliente.setDatos(nombre, domicilio, celCasa, celPersonal, email);
 		
-		BD_clientes.insert(cliente);
+		if(!BD_clientes.insert(cliente)) {
+			System.out.println(BD_clientes.getMsg());
+			return false;
+		}
+		
 		cliente.setId(BD_clientes.count());
+		return true;
 	}
 	
 	public void registrarMascota(String nombre, String raza, String tipo, String sexo, String edad, String peso, String color) {
