@@ -6,42 +6,37 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import classes.Lista;
-import models.Cliente;
+import models.Expediente;
 
-public class BD_clientes extends DataBase {
+public class BD_expedientes extends DataBase {
     
     private static String msg;
-    private static String tabla = "clientes";
-    private static String columnas = "nombre, domicilio, celCasa, celPersonal, email";
+    private static String tabla = "expedientes";
+    private static String columnas = "mascota, fechaCreacion";
     
-    public static Lista<Cliente> all() {
-        Lista<Cliente> clientes = new Lista<>();
+    public static Lista<Expediente> all() {
+        Lista<Expediente> expedientes = new Lista<>();
         String sql = "SELECT * FROM " + tabla;
 
         try (Statement stmt = DataBase.getConn().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
              
             while(rs.next()) {
-                clientes.InsertarFinal(
-                        new Cliente(
+                expedientes.InsertarFinal(
+                        new Expediente(
                                 rs.getInt(1),
-                                rs.getString(2),
-                                rs.getString(3),
-                                rs.getString(4), 
-                                rs.getString(5), 
-                                rs.getString(6), 
-                                rs.getString(7)
+                                rs.getString(2)
                         )
                 );
             }
         } catch (SQLException e) {
             msg = e.getMessage();
         }
-        return clientes;
+        return expedientes;
     }
     
-    public static Cliente where(String columna, String valor) {
-        Cliente cliente = null;
+    public static Expediente where(String columna, String valor) {
+        Expediente expediente = null;
         
         String sql = "SELECT TOP 1 * FROM " + tabla + " WHERE " + columna + " = ?";
         
@@ -51,25 +46,21 @@ public class BD_clientes extends DataBase {
             
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    cliente = new Cliente(
+                    expediente = new Expediente(
                             rs.getInt(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getString(4), 
-                            rs.getString(5), 
-                            rs.getString(6), 
-                            rs.getString(7)
+                            rs.getString(3)
                     );
                 }
             }
         } catch (SQLException e) {
             msg = e.getMessage();
         }
-        return cliente;
+        
+        return expediente;
     }
     
-    public static boolean insert(Cliente cliente) {
-        String sql = "INSERT INTO " + tabla + " (" + columnas + ") VALUES ("+ cliente.getValues() +")";
+    public static boolean insert(Expediente expediente) {
+        String sql = "INSERT INTO " + tabla + " (" + columnas + ") VALUES ("+ expediente.getValues() +")";
         
         try (Statement stmt = DataBase.getConn().createStatement()) {
             int rowsAffected = stmt.executeUpdate(sql);
@@ -78,6 +69,7 @@ public class BD_clientes extends DataBase {
             
         } catch(SQLException e) {
             msg = e.getMessage();
+            System.out.println(msg);
             return false;
         }
     }

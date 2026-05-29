@@ -6,42 +6,45 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import classes.Lista;
-import models.Consulta;
+import models.Mascota;
 
-public class BD_consultas extends DataBase {
+public class BD_mascotas extends DataBase {
     
     private static String msg;
-    private static String tabla = "consultas";
-    private static String columnas = "expediente, veterinario, sintomas, diagnostico, observaciones, fecha";
+    private static String tabla = "mascotas";
+    private static String columnas = "cliente, nombre, raza, tipo, sexo, edad, peso, color";
     
-    public static Lista<Consulta> all() {
-        Lista<Consulta> consultas = new Lista<>();
+    public static Lista<Mascota> all() {
+        Lista<Mascota> mascotas = new Lista<>();
         String sql = "SELECT * FROM " + tabla;
 
         try (Statement stmt = DataBase.getConn().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
              
             while(rs.next()) {
-                consultas.InsertarFinal(
-                        new Consulta(
-                                rs.getInt(1),
+                mascotas.InsertarFinal(
+                        new Mascota(
+                        		rs.getInt(1),
                                 rs.getInt(2),
-                                rs.getInt(3),
+                                rs.getString(3), 
                                 rs.getString(4), 
                                 rs.getString(5), 
-                                rs.getString(6), 
-                                rs.getString(7)
+                                rs.getString(6),
+                                rs.getString(7),
+                                rs.getString(8),
+                                rs.getString(9),
+                                rs.getString(10)
                         )
                 );
             }
         } catch (SQLException e) {
             msg = e.getMessage();
         }
-        return consultas;
+        return mascotas;
     }
     
-    public static Consulta where(String columna, String valor) {
-        Consulta consulta = null;
+    public static Mascota where(String columna, String valor) {
+        Mascota mascota = null;
         
         String sql = "SELECT TOP 1 * FROM " + tabla + " WHERE " + columna + " = ?";
         
@@ -51,26 +54,29 @@ public class BD_consultas extends DataBase {
             
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    consulta = new Consulta(
+                    mascota = new Mascota(
                             rs.getInt(1),
                             rs.getInt(2),
-                            rs.getInt(3),
+                            rs.getString(3), 
                             rs.getString(4), 
                             rs.getString(5), 
-                            rs.getString(6), 
-                            rs.getString(7)
+                            rs.getString(6),
+                            rs.getString(7),
+                            rs.getString(8),
+                            rs.getString(9),
+                            rs.getString(10)
                     );
                 }
             }
         } catch (SQLException e) {
             msg = e.getMessage();
         }
-        return consulta;
+        return mascota;
     }
     
-    public static Lista<Consulta> whereAll(String columna, String valor) {
-        Lista<Consulta> consultas = new Lista<>();
-        
+    public static Lista<Mascota> whereAll(String columna, String valor) {
+        Lista<Mascota> mascotas = new Lista<>();
+
         String sql = "SELECT * FROM " + tabla + " WHERE " + columna + " = ?";
         
         try (PreparedStatement pstmt = DataBase.getConn().prepareStatement(sql)) {
@@ -79,15 +85,18 @@ public class BD_consultas extends DataBase {
             
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    consultas.InsertarFinal(
-                            new Consulta(
-                                    rs.getInt(1),
+                    mascotas.InsertarFinal(
+                            new Mascota(
+                            		rs.getInt(1),
                                     rs.getInt(2),
-                                    rs.getInt(3),
+                                    rs.getString(3), 
                                     rs.getString(4), 
                                     rs.getString(5), 
-                                    rs.getString(6), 
-                                    rs.getString(7)
+                                    rs.getString(6),
+                                    rs.getString(7),
+                                    rs.getString(8),
+                                    rs.getString(9),
+                                    rs.getString(10)
                             )
                     );
                 }
@@ -95,12 +104,12 @@ public class BD_consultas extends DataBase {
         } catch (SQLException e) {
             msg = e.getMessage();
         }
-        return consultas;
+        return mascotas;
     }
     
-    public static boolean insert(Consulta consulta) {
-        String sql = "INSERT INTO " + tabla + " (" + columnas + ") VALUES ("+ consulta.getValues() +")";
-
+    public static boolean insert(Mascota mascota) {
+        String sql = "INSERT INTO " + tabla + " (" + columnas + ") VALUES ("+ mascota.getValues() +")";
+        
         try (Statement stmt = DataBase.getConn().createStatement()) {
             int rowsAffected = stmt.executeUpdate(sql);
             

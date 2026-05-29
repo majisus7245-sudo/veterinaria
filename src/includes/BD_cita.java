@@ -6,75 +6,70 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import classes.Lista;
-import models.Mascota;
+import models.Cita;
+import models.Expediente;
 
-public class BD_mascota {
+public class BD_cita extends DataBase {
     
     private static String msg;
-    private static String tabla = "mascotas";
-    private static String columnas = "cliente, expediente, nombre, raza, tipo, sexo, edad, peso, color";
-
-    public static Lista<Mascota> all() {
-        Lista<Mascota> mascota = new Lista<>();
+    private static String tabla = "cita";
+    private static String columnas = "mascota";
+    
+    public static Lista<Cita> all() {
+        Lista<Cita> citas = new Lista<>();
         String sql = "SELECT * FROM " + tabla;
-        
+
         try (Statement stmt = DataBase.getConn().createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
              
             while(rs.next()) {
-                mascota.InsertarFinal(
-                        new Mascota(
-                                rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                                rs.getString(4), rs.getString(5), rs.getString(6), 
-                                rs.getString(7), rs.getString(8), rs.getString(9),
-                                rs.getString(10), rs.getString(11)
+                citas.InsertarFinal(
+                        new Cita(
+                                rs.getInt(1),
+                                rs.getInt(2)
                         )
                 );
             }
         } catch (SQLException e) {
             msg = e.getMessage();
         }
-        return mascota;
+        return citas;
     }
     
-    public static Lista<Mascota> whereAll(String columna, String valor) {
-        Lista<Mascota> mascotas = new Lista<>(); 
+    public static Cita where(String columna, String valor) {
+        Cita cita = null;
         
-        String sql = "SELECT * FROM " + tabla + " WHERE " + columna + " = ?";
+        String sql = "SELECT TOP 1 * FROM " + tabla + " WHERE " + columna + " = ?";
         
         try (PreparedStatement pstmt = DataBase.getConn().prepareStatement(sql)) {
             
-            // Set the value safely
             pstmt.setString(1, valor);
             
             try (ResultSet rs = pstmt.executeQuery()) {
-                while(rs.next()) {
-                    mascotas.InsertarFinal(
-                            new Mascota(
-                                    rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                                    rs.getString(4), rs.getString(5), rs.getString(6), 
-                                    rs.getString(7), rs.getString(8), rs.getString(9),
-                                    rs.getString(10), rs.getString(11)
-                            )
+                if (rs.next()) {
+                    cita = new Cita(
+                            rs.getInt(1),
+                            rs.getInt(2)
                     );
                 }
             }
         } catch (SQLException e) {
             msg = e.getMessage();
         }
-        return mascotas;
+        return cita;
     }
     
-    public static boolean insert(Mascota mascota) {
-        String sql = "INSERT INTO " + tabla + " (" + columnas + ") VALUES ("+ mascota.getValues() +")";
-
+    public static boolean insert(Cita cita) {
+        String sql = "INSERT INTO " + tabla + " (" + columnas + ") VALUES ("+ cita.getValues() +")";
+        
         try (Statement stmt = DataBase.getConn().createStatement()) {
-            
             int rowsAffected = stmt.executeUpdate(sql);
+            
             return rowsAffected > 0;
             
         } catch(SQLException e) {
             msg = e.getMessage();
+            System.out.println(msg);
             return false;
         }
     }
@@ -92,9 +87,8 @@ public class BD_mascota {
             
         } catch(SQLException e) {
             msg = e.getMessage();
-            return null;
+            return null; 
         }
-        
         return count;
     }
 }

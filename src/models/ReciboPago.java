@@ -3,19 +3,26 @@ package models;
 public class ReciboPago {
 	
 	private int id, consulta; 
-	private float precio;
+	private double precio;
 	private String fecha;
 	
-	public ReciboPago(float Precio, String fecha) {
+	public ReciboPago(String fecha, double precio, int consulta) {
 		this.precio = precio;
 		this.fecha = fecha;
+		this.consulta = consulta;
 	}
 	
-	public ReciboPago(int id, int consulta, float precio, String fecha) {
+	public ReciboPago(int id, int consulta, double precio, String fecha) {
 		this.id = id;
 		this.consulta = consulta;
 		this.precio = precio;
 		this.fecha = fecha;
+		
+		System.out.println("Recibo de Pago ->" + toString());
+	}
+	
+	public String toString() {
+		return id + " " + precio;
 	}
 
 	public int getId() {
@@ -34,7 +41,7 @@ public class ReciboPago {
 		this.consulta = consulta;
 	}
 
-	public float getPrecio() {
+	public double getPrecio() {
 		return precio;
 	}
 
@@ -48,6 +55,10 @@ public class ReciboPago {
 
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
+	}
+
+	public String getValues() {
+		return "'" + consulta + "', '" + precio + "', '" + fecha + "'";
 	}
 	
 	

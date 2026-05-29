@@ -1,13 +1,14 @@
 package models;
 
 import classes.Lista;
-import includes.BD_mascota;
+import includes.BD_mascotas;
 
 public class Cliente {
 	
 	private int id;
 	private String nombre, domicilio, celCasa, celPersonal, email, estado;
 	private Lista<Mascota> contenedorMascotas;
+	private String msg;
 	
 	public Cliente() {
 		contenedorMascotas = new Lista();
@@ -22,9 +23,9 @@ public class Cliente {
 		this.email = email;
 		this.estado = estado;
 		
-		System.out.println("Cliente -> " + getValues());
+		System.out.println("Cliente ->" + toString());
 		
-		contenedorMascotas = BD_mascota.whereAll("cliente", this.id + "");
+		contenedorMascotas = BD_mascotas.whereAll("cliente", this.id + "");
 		
 	}
 	
@@ -36,15 +37,14 @@ public class Cliente {
 		this.email = email;
 	}
 	
-	public void nuevaMascota(String nombre, String raza, String tipo, String sexo, String edad, String peso, String color) {
-		Mascota mascota = new Mascota(getId(), nombre, raza, tipo, sexo, edad, peso, color);
+	public boolean nuevaMascota(String nombre, String raza, String tipo, String sexo, String edad, String peso, String color) {
+		Mascota mascota = new Mascota(id, nombre, raza, tipo, sexo, edad, peso, color);
+		
+		
 		
 		contenedorMascotas.InsertarFinal(mascota);
 		
-		if(!BD_mascota.insert(mascota)) {
-			System.out.println("no se guardo la mascota");
-			
-		}
+		return true;
 	}
 	
 	public String getValues() {
@@ -109,6 +109,10 @@ public class Cliente {
 	
 	public String toString() {
 		return id + " " + nombre;
+	}
+
+	public String getMsg() {
+		return msg;
 	}
 
 }

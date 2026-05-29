@@ -8,13 +8,15 @@ import includes.BD_consultas;
 
 public class Expediente {
 
-	private int id;
+	private int id, mascota;
 	private String fecha;
 	private Lista<Consulta> contenedorConsultas;
+	private Consulta consulta;
 	
-	public Expediente() {
-		contenedorConsultas = new Lista();
+	public Expediente(int mascota) {
+		this.mascota = mascota;
 		fecha = date();
+		contenedorConsultas = new Lista();
 	}
 	
 	public String date() {
@@ -27,9 +29,32 @@ public class Expediente {
 		this.id = id;
 		this.fecha = fechaCreacion;
 		
-		System.out.println("Expediente -> " + getValues());
+		System.out.println("Expediente ->" + toString());
 		
 		contenedorConsultas = BD_consultas.whereAll("expediente", this.id + "");
+	}
+	
+	public String toString() {
+		return id + " - " + fecha;
+	}
+	
+	public void crearConsulta(int idMedico) {
+		consulta = new Consulta(idMedico, id);
+	}
+	
+	public void guardarInformacion(String sintomas, String diagnostico, String observaciones) {
+		
+		consulta.setInformacion(sintomas, diagnostico, observaciones);
+		
+		BD_consultas.insert(consulta);
+		
+		consulta.setId(BD_consultas.count());
+	}
+	
+	public void generarReciboPago(String raza) {
+		consulta.generarReciboPago(raza);
+		
+		contenedorConsultas.InsertarFinal(consulta);
 	}
 
 	public int getId() {
@@ -57,7 +82,7 @@ public class Expediente {
 	}
 
 	public String getValues() {
-		return "'" + fecha + "'";
+		return "'" + mascota + "', '" + fecha + "'";
 	}
 	
 	

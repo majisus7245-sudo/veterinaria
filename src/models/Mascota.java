@@ -1,7 +1,7 @@
 package models;
 
-import includes.BD_expediente;
-import includes.BD_mascota;
+import includes.BD_expedientes;
+import includes.BD_mascotas;
 
 public class Mascota {
 	
@@ -19,16 +19,17 @@ public class Mascota {
 		this.peso = peso;
 		this.color = color;
 		
-		expediente = new Expediente();
+		BD_mascotas.insert(this);
+		id = BD_mascotas.count();
 		
-		System.out.println("Mascota -> " +getValues());
+		expediente = new Expediente(id);
 		
-		BD_expediente.insert(expediente);
-		expediente.setId(BD_expediente.count());
+		BD_expedientes.insert(expediente);
 		
+		expediente.setId(BD_expedientes.count());
 	}
 	
-	public Mascota(int id, int cliente, int expediente, String nombre, String raza, String tipo, String sexo, String edad, String peso, String color, String estado) {
+	public Mascota(int id, int cliente, String nombre, String raza, String tipo, String sexo, String edad, String peso, String color, String estado) {
 		this.id = id;
 		this.cliente = cliente;
 		this.nombre = nombre;
@@ -40,8 +41,26 @@ public class Mascota {
 		this.color = color;
 		this.estado = estado;
 		
-		//Realizar consulta a base de datos para Expediente
-		this.expediente = BD_expediente.where("id", expediente + "");
+		System.out.println("Mascota ->" + toString());
+		
+		this.expediente = BD_expedientes.where("mascota", id + "");
+	}
+	
+	public String toString() {
+		return id + " " + nombre;
+	}
+	
+	public void crearConsulta(int idMedico) {
+		expediente.crearConsulta(idMedico);
+	}
+	
+	public void guardarInformacion(String sintomas, String diagnostico, String observaciones) {
+		expediente.guardarInformacion(sintomas, diagnostico, observaciones);
+	}
+	
+	public void finalizarConsulta() {
+		expediente.generarReciboPago(raza);
+		
 	}
 
 	public int getId() {
@@ -133,7 +152,7 @@ public class Mascota {
 	}
 
 	public String getValues() {
-		return "'" + cliente + "', '" + expediente.getId() + "', '" + nombre +"', '" + raza + "', '" + tipo + "', '" + sexo + "', '" + edad + "', '" + peso + "', '" + color + "'";
+		return "'" + cliente + "', '" + nombre +"', '" + raza + "', '" + tipo + "', '" + sexo + "', '" + edad + "', '" + peso + "', '" + color + "'";
 	}
 	
 	

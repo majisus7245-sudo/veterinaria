@@ -17,10 +17,12 @@ public class UC1 {
 		controlador.inciarRegistro();
 		System.out.println("Registro iniciado");
 		
-		controlador.datosCliente("Pedrito", "Culiacan", "1234567890", "1234567890", "correo@correo.com");
+		int id = BD_clientes.count();
+		
+		controlador.datosCliente("Pedrito" + id, "Culiacan", "1234567890", "1234567890", "correo@correo.com");
 		controlador.registrarMascota("perro", "buldoser", "perro", "M", "2", "4", "negro");
 		
-		Cliente cliente = BD_clientes.where("nombre", "pedrito");
+		Cliente cliente = BD_clientes.where("nombre", "pedrito" + id);
 		
 	}
 
