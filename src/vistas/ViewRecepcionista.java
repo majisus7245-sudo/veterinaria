@@ -8,7 +8,12 @@ import java.awt.*;
 
 public class ViewRecepcionista extends JFrame {
 	private JButton btnAgregarMascota;
-
+	private ViewAgregarMascota vistaAgregarMascota;
+	private JPanel contenedor;
+	private JPanel tarjeta;
+	private JLabel titulo;
+	private JLabel subtitulo;
+	private JLabel ayuda;
 	public ViewRecepcionista() {
 		super("Veterinaria - Recepción");
 		this.setMinimumSize(new Dimension(700, 420));
@@ -25,10 +30,10 @@ public class ViewRecepcionista extends JFrame {
 	}
 
 	private void hazInterfaz() {
-		JPanel contenedor = new JPanel(new GridBagLayout());
+		contenedor = new JPanel(new GridBagLayout());
 		contenedor.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
 		contenedor.setBackground(new Color(239, 246, 242));
-		JPanel tarjeta = new JPanel(new GridBagLayout());
+		tarjeta = new JPanel(new GridBagLayout());
 		tarjeta.setBackground(Color.WHITE);
 		tarjeta.setBorder(BorderFactory.createCompoundBorder(
 			BorderFactory.createLineBorder(new Color(214, 226, 220), 1, true),
@@ -41,12 +46,12 @@ public class ViewRecepcionista extends JFrame {
 		gbc.gridy = 0;
 		gbc.gridwidth = 2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		JLabel titulo = new JLabel("Panel de recepción", SwingConstants.CENTER);
+		titulo = new JLabel("Panel de recepción", SwingConstants.CENTER);
 		titulo.setFont(new Font("SansSerif", Font.BOLD, 28));
 		titulo.setForeground(new Color(33, 43, 54));
 		tarjeta.add(titulo, gbc);
 		gbc.gridy++;
-		JLabel subtitulo = new JLabel("Solo tienes la opción de registrar mascotas", SwingConstants.CENTER);
+		subtitulo = new JLabel("Solo tienes la opción de registrar mascotas", SwingConstants.CENTER);
 		subtitulo.setFont(new Font("SansSerif", Font.PLAIN, 15));
 		subtitulo.setForeground(new Color(92, 107, 119));
 		tarjeta.add(subtitulo, gbc);
@@ -59,7 +64,7 @@ public class ViewRecepcionista extends JFrame {
 		btnAgregarMascota.setBorder(BorderFactory.createEmptyBorder(12, 22, 12, 22));
 		tarjeta.add(btnAgregarMascota, gbc);
 		gbc.gridy++;
-		JLabel ayuda = new JLabel("Presiona el botón para abrir el formulario de registro.", SwingConstants.CENTER);
+		ayuda = new JLabel("Presiona el botón para abrir el formulario de registro.", SwingConstants.CENTER);
 		ayuda.setFont(new Font("SansSerif", Font.PLAIN, 13));
 		ayuda.setForeground(new Color(120, 132, 140));
 		tarjeta.add(ayuda, gbc);
@@ -77,12 +82,13 @@ public class ViewRecepcionista extends JFrame {
 	public void hazEscuchadores(RegistroController controlador) {
 		btnAgregarMascota.addActionListener(controlador);
 	}
+	public void crearVistaRegistro(RegistroController controlador){
+		vistaAgregarMascota = new ViewAgregarMascota();
+		vistaAgregarMascota.hazEscuchadores(controlador);
+		vistaAgregarMascota.setVisible(true);
+	}
+	public ViewAgregarMascota getVistaAgregarMascota() {
+		return vistaAgregarMascota;
+	}
 	
-  // @Override
-  // public void actionPerformed(ActionEvent e) {
-		//   if(e.getSource() == btnAgregarMascota) {
-			//     ViewAgregarMascota agregarMascota = new ViewAgregarMascota();
-			//     agregarMascota.setVisible(true);
-  //   }
-  // }
 }

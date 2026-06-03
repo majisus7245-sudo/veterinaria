@@ -2,6 +2,7 @@ package vistas;
 
 import javax.swing.*;
 
+import controllers.RegistroController;
 import includes.BD_mascotas;
 
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.event.ActionListener;
 
 import models.Mascota;
 
-public class ViewAgregarMascota extends JFrame implements ActionListener{
+public class ViewAgregarMascota extends JFrame{
 	private JTextField txtCliente;
 	private JTextField txtNombre;
 	private JTextField txtRaza;
@@ -29,7 +30,6 @@ public class ViewAgregarMascota extends JFrame implements ActionListener{
 		this.setMinimumSize(new Dimension(920, 700));
 		this.setResizable(false);
 		crearInterfaz();
-		hacerEscuchadores();
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -150,49 +150,22 @@ public class ViewAgregarMascota extends JFrame implements ActionListener{
 		tarjeta.add(componente, campos);
 	}
 
-	private void hacerEscuchadores() {
+	public void hazEscuchadores(RegistroController controlador) {
 		btnCerrar.addActionListener(e -> dispose());
-		btnGuardar.addActionListener(this);
+		btnGuardar.addActionListener(controlador);
 	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnGuardar) {
-			lblError.setText(" ");
-			String clienteTexto = txtCliente.getText().trim();
-			String nombre = txtNombre.getText().trim();
-			String raza = txtRaza.getText().trim();
-			String tipo = txtTipo.getText().trim();
-			String sexo = cboSexo.getSelectedItem() == null ? "" : cboSexo.getSelectedItem().toString();
-			String edad = txtEdad.getText().trim();
-			String peso = txtPeso.getText().trim();
-			String color = txtColor.getText().trim();
-			if (clienteTexto.isEmpty() || nombre.isEmpty() || raza.isEmpty() || tipo.isEmpty() || sexo.isEmpty() || edad.isEmpty() || peso.isEmpty() || color.isEmpty()) {
-				lblError.setText("Todos los campos son obligatorios.");
-				return;
-			}
-			int cliente;
-			try {
-				cliente = Integer.parseInt(clienteTexto);
-			} catch (NumberFormatException ex) {
-				lblError.setText("El ID del cliente debe ser numérico.");
-				txtCliente.requestFocusInWindow();
-				return;
-			}
-			Mascota mascota = new Mascota(cliente, nombre, raza, tipo, sexo, edad, peso, color);
-			if(!BD_mascotas.insert(mascota)) {
-				JOptionPane.showMessageDialog(this, "Error al guardar la mascota.", "Error", JOptionPane.ERROR_MESSAGE);
-				txtCliente.setText("");
-				txtNombre.setText("");
-				txtRaza.setText("");
-				txtTipo.setText("");
-				cboSexo.setSelectedIndex(0);
-				txtEdad.setText("");
-				txtPeso.setText("");
-				txtColor.setText("");
-				txtCliente.requestFocusInWindow();
-			} else {
-				JOptionPane.showMessageDialog(this, "Mascota guardada correctamente.", "Guardado", JOptionPane.INFORMATION_MESSAGE);
-			}
-		}
-	}
+
+	public JTextField getTxtCliente() { return txtCliente; }
+	public JTextField getTxtNombre() { return txtNombre; }
+	public JTextField getTxtRaza() { return txtRaza; }
+	public JTextField getTxtTipo() { return txtTipo; }
+	public JComboBox<String> getCboSexo() { return cboSexo; }
+	public JTextField getTxtEdad() { return txtEdad; }
+	public JTextField getTxtPeso() { return txtPeso; }
+	public JTextField getTxtColor() { return txtColor; }
+	public JLabel getLblEstado() { return lblEstado; }
+	public JLabel getLblError() { return lblError; }
+	public JButton getBtnGuardar() { return btnGuardar; }
+	public JButton getBtnCerrar() { return btnCerrar; }
+	
 }
