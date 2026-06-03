@@ -2,8 +2,12 @@ package controllers;
 
 import java.awt.event.*;
 
+import javax.swing.JOptionPane;
+
 import includes.BD_clientes;
+import includes.BD_mascotas;
 import models.Cliente;
+import models.Mascota;
 import vistas.*;
 
 public class RegistroController implements ActionListener{
@@ -46,5 +50,57 @@ public class RegistroController implements ActionListener{
 	      ViewAgregarMascota agregarMascota = new ViewAgregarMascota();
 	      agregarMascota.setVisible(true);
 	    }
+	      
+		if(e.getSource() == vista.getBtnRegistrarCliente()) {
+			inciarRegistro();
+			vista.crearVistaRegistroCliente(this);
+			return;
+		}
+		// if(e.getSource() == vista.getBtnRegistrarCliente()) {
+		// 	vista.crearVistaRegistro(this);
+		// }
+		
+		if (vista.getVistaAgregarCliente() != null && e.getSource() == vista.getVistaAgregarCliente().getBtnGuardar()) {
+			vista.getVistaAgregarCliente().getLblError().setText(" ");
+			String nombre = vista.getVistaAgregarCliente().getTxtNombre().getText().trim();
+			String domicilio = vista.getVistaAgregarCliente().getTxtDomicilio().getText().trim();
+			String celCasa = vista.getVistaAgregarCliente().getTxtCelCasa().getText().trim();
+			String celPersonal = vista.getVistaAgregarCliente().getTxtCelPersonal().getText().trim();
+			String email = vista.getVistaAgregarCliente().getTxtEmail().getText().trim();
+			if (nombre.isEmpty() || domicilio.isEmpty() || celPersonal.isEmpty() || email.isEmpty()) {
+				vista.getVistaAgregarCliente().getLblError().setText("Todos los campos son obligatorios excepto Tel. casa.");
+				return;
+			}
+			datosCliente(nombre, domicilio, celCasa, celPersonal, email);
+			JOptionPane.showMessageDialog(vista.getVistaAgregarCliente(), "Cliente registrado correctamente.");
+			vista.getVistaAgregarCliente().dispose();
+			vista.crearVistaRegistroMascota(this);
+			return;
+		}
+		if (e.getSource() == vista.getVistaAgregarMascota().getBtnGuardar()) {
+			vista.getVistaAgregarMascota().getLblError().setText(" ");
+			String clienteTexto = vista.getVistaAgregarMascota().getTxtCliente().getText().trim();
+			String nombre = vista.getVistaAgregarMascota().getTxtNombre().getText().trim();
+			String raza = vista.getVistaAgregarMascota().getTxtRaza().getText().trim();
+			String tipo = vista.getVistaAgregarMascota().getTxtTipo().getText().trim();
+			String sexo = vista.getVistaAgregarMascota().getCboSexo().getSelectedItem() == null ? "" : vista.getVistaAgregarMascota().getCboSexo().getSelectedItem().toString();
+			String edad = vista.getVistaAgregarMascota().getTxtEdad().getText().trim();
+			String peso = vista.getVistaAgregarMascota().getTxtPeso().getText().trim();
+			String color = vista.getVistaAgregarMascota().getTxtColor().getText().trim();
+			if (clienteTexto.isEmpty() || nombre.isEmpty() || raza.isEmpty() || tipo.isEmpty() || sexo.isEmpty() || edad.isEmpty() || peso.isEmpty() || color.isEmpty()) {
+				vista.getVistaAgregarMascota().getLblError().setText("Todos los campos son obligatorios.");
+				return;
+			}
+			int cliente;
+			try {
+				cliente = Integer.parseInt(clienteTexto);
+			} catch (NumberFormatException ex) {
+				vista.getVistaAgregarMascota().getLblError().setText("El ID del cliente debe ser numérico.");
+				vista.getVistaAgregarMascota().getTxtCliente().requestFocusInWindow();
+				return;
+			}
+			registrarMascota(nombre, raza, tipo, sexo, edad, peso, color);
+			return;
+		}
 	}
 }

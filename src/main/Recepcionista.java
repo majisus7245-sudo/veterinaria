@@ -1,6 +1,9 @@
 package main;
 
 import javax.swing.*;
+
+import vistas.ViewAgregarMascota;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -76,7 +79,7 @@ public class Recepcionista extends JFrame implements ActionListener{
   @Override
   public void actionPerformed(ActionEvent e) {
     if(e.getSource() == btnAgregarMascota) {
-      AgregarMascota agregarMascota = new AgregarMascota();
+      ViewAgregarMascota agregarMascota = new ViewAgregarMascota();
       agregarMascota.setVisible(true);
     }
   }
