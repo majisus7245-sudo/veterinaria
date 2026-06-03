@@ -1,4 +1,4 @@
-package main;
+package vistas;
 
 import javax.swing.*;
 
@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 import models.Mascota;
 
-public class AgregarMascota extends JFrame implements ActionListener{
+public class ViewAgregarMascota extends JFrame implements ActionListener{
 	private JTextField txtCliente;
 	private JTextField txtNombre;
 	private JTextField txtRaza;
@@ -24,7 +24,7 @@ public class AgregarMascota extends JFrame implements ActionListener{
 	private JButton btnGuardar;
 	private JButton btnCerrar;
 
-	public AgregarMascota() {
+	public ViewAgregarMascota() {
 		super("Veterinaria - Agregar Mascota");
 		this.setMinimumSize(new Dimension(920, 700));
 		this.setResizable(false);

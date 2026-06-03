@@ -1,7 +1,9 @@
-package main;
+package vistas;
 
 import javax.swing.*;
 
+import controllers.LoginController;
+import controllers.MainController;
 import includes.BD_usuarios;
 import includes.DataBase;
 
@@ -11,7 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class Main extends JFrame implements ActionListener{
+public class ViewLogin extends JFrame implements ActionListener{
 	private JTextField txtNombre;
 	private JPasswordField txtPassword;
 	public String usuarioParaBD;
@@ -20,8 +22,14 @@ public class Main extends JFrame implements ActionListener{
 	private JLabel errorPassword;
 	private JButton btnIngresar;	
 	private JButton btnCancelar;
-	Main(){
+	private MainController mainController;
+	public ViewLogin(MainController mainController){
 		super("Veterinaria - Login");
+		this.mainController = mainController;
+		if(!DataBase.Connect()){
+			JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(920, 560));
 		this.setResizable(false);
@@ -172,6 +180,28 @@ public class Main extends JFrame implements ActionListener{
 			errorPassword.setText("");
 		});
 	}
+	public void conectarControlador(LoginController controlador){
+		btnIngresar.addActionListener(controlador);
+	}
+	public JButton getBtnIngresar() {
+		return btnIngresar;
+	}
+	public JButton getBtnCancelar() {
+		return btnCancelar;
+	}
+	public JTextField getTxtNombre() {
+		return txtNombre;
+	}
+	public JPasswordField getTxtPassword() {
+		return txtPassword;
+	}
+	public JLabel getErrorNombre() {
+		return errorNombre;
+	}
+	public JLabel getErrorPassword() {
+		return errorPassword;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnIngresar){
@@ -202,7 +232,7 @@ public class Main extends JFrame implements ActionListener{
 				txtNombre.requestFocusInWindow();
 				return;
 			}
-			if(usuario.getPassword() == null || !usuario.getPassword().equals(pass)){
+			if(!usuario.revisarPassword(pass)){
 				errorPassword.setText("Password incorrecto");
 				usuarioParaBD = null;
 				claveParaBD = null;
@@ -214,24 +244,17 @@ public class Main extends JFrame implements ActionListener{
 			claveParaBD = pass;
 			errorNombre.setText("");
 			errorPassword.setText("");
-			if("1".equals(usuario.getRol())){
-				JOptionPane.showMessageDialog(this, "Bienvenido, recepcionista.", "Login", JOptionPane.INFORMATION_MESSAGE);
-				Recepcionista recepcionista = new Recepcionista();
-				recepcionista.setVisible(true);
-				this.dispose();
-				return;
-			}
-			JOptionPane.showMessageDialog(this, "Este usuario no tiene acceso a la pantalla de recepción.", "Login", JOptionPane.WARNING_MESSAGE);
+			mainController.redireccional(usuario);
+			// if("1".equals(usuario.getRol())){
+			// 	JOptionPane.showMessageDialog(this, "Bienvenido, recepcionista.", "Login", JOptionPane.INFORMATION_MESSAGE);
+			// 	ViewRecepcionista recepcionista = new ViewRecepcionista();
+			// 	recepcionista.setVisible(true);
+			// 	this.dispose();
+			// 	return;
+			// }
+			// JOptionPane.showMessageDialog(this, "Este usuario no tiene acceso a la pantalla de recepción.", "Login", JOptionPane.WARNING_MESSAGE);
 			
 		}
-	}
-	public static void main(String[] args) {
-		if(!DataBase.Connect()){
-			JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		Main main = new Main();
-		main.setVisible(true);
 	}
 	private static class FondoPanel extends JPanel {
 		@Override
@@ -271,5 +294,6 @@ public class Main extends JFrame implements ActionListener{
 			g2.draw(new RoundRectangle2D.Double(0, 0, getWidth() - 16, getHeight() - 16, 28, 28));
 			g2.dispose();
 		}
+		
 	}
 }
