@@ -13,16 +13,16 @@ public class UC1 {
 			return;
 		}
 		
-		RegistroController controlador = new RegistroController();
-		controlador.inciarRegistro();
-		System.out.println("Registro iniciado");
+		// RegistroController controlador = new RegistroController();
+		// controlador.inciarRegistro();
+		// System.out.println("Registro iniciado");
 		
-		int id = BD_clientes.count();
+		// int id = BD_clientes.count();
 		
-		controlador.datosCliente("Pedrito" + id, "Culiacan", "1234567890", "1234567890", "correo@correo.com");
-		controlador.registrarMascota("perro", "buldoser", "perro", "M", "2", "4", "negro");
+		// controlador.datosCliente("Pedrito" + id, "Culiacan", "1234567890", "1234567890", "correo@correo.com");
+		// controlador.registrarMascota("perro", "buldoser", "perro", "M", "2", "4", "negro");
 		
-		Cliente cliente = BD_clientes.where("nombre", "pedrito" + id);
+		// Cliente cliente = BD_clientes.where("nombre", "pedrito" + id);
 		
 	}
 

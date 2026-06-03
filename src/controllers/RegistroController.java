@@ -1,15 +1,19 @@
 package controllers;
 
+import java.awt.event.*;
+
 import includes.BD_clientes;
 import models.Cliente;
+import vistas.*;
 
-public class RegistroController {
-	
+public class RegistroController implements ActionListener{
+	private ViewRecepcionista vista;
 	private Cliente cliente;
 	private String msg;
 	
-	public RegistroController() {
-		
+	public RegistroController(ViewRecepcionista vista) {
+		this.vista = vista;
+		this.vista.hazEscuchadores(this);
 	}
 	
 	public void inciarRegistro() {
@@ -36,5 +40,11 @@ public class RegistroController {
 	public String getMsg() {
 		return msg;
 	}
-
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == vista.getBtnAgregarMascota()) {
+      ViewAgregarMascota agregarMascota = new ViewAgregarMascota();
+      agregarMascota.setVisible(true);
+    }
+	}
 }

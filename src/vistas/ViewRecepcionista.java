@@ -1,21 +1,27 @@
-package main;
+package vistas;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 
-public class Recepcionista extends JFrame implements ActionListener{
+import controllers.RegistroController;
+
+import java.awt.*;
+
+public class ViewRecepcionista extends JFrame {
 	private JButton btnAgregarMascota;
 
-	public Recepcionista() {
+	public ViewRecepcionista() {
 		super("Veterinaria - Recepción");
 		this.setMinimumSize(new Dimension(700, 420));
 		this.setResizable(false);
 		hazInterfaz();
-		hazEscuchadores();
 		this.pack();
 		this.setLocationRelativeTo(null);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	}
+
+	// Getters
+	public JButton getBtnAgregarMascota() {
+		return btnAgregarMascota;
 	}
 
 	private void hazInterfaz() {
@@ -68,14 +74,15 @@ public class Recepcionista extends JFrame implements ActionListener{
 		this.setContentPane(contenedor);
 	}
 
-	private void hazEscuchadores() {
-		btnAgregarMascota.addActionListener(this);
+	public void hazEscuchadores(RegistroController controlador) {
+		btnAgregarMascota.addActionListener(controlador);
 	}
-  @Override
-  public void actionPerformed(ActionEvent e) {
-    if(e.getSource() == btnAgregarMascota) {
-      AgregarMascota agregarMascota = new AgregarMascota();
-      agregarMascota.setVisible(true);
-    }
-  }
+	
+  // @Override
+  // public void actionPerformed(ActionEvent e) {
+		//   if(e.getSource() == btnAgregarMascota) {
+			//     ViewAgregarMascota agregarMascota = new ViewAgregarMascota();
+			//     agregarMascota.setVisible(true);
+  //   }
+  // }
 }
