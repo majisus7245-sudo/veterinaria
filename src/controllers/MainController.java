@@ -20,5 +20,12 @@ public class MainController {
       vistaLogin.dispose();
       return;
     }
+    if("2".equals(usuario.getRol())){
+      ViewVeterinario veterinario = new ViewVeterinario();
+      VeterinarioController controlador = new VeterinarioController(veterinario, usuario.getId());
+      veterinario.setVisible(true);
+      vistaLogin.dispose();
+      return;
+    }
   }
 }
