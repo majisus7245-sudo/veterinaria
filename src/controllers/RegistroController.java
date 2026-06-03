@@ -47,11 +47,35 @@ public class RegistroController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == vista.getBtnAgregarMascota()) {
-      vista.crearVistaRegistro(this);
-    }
+	      vista.crearVistaRegistroMascota(this);
+				return;
+	  }
+		if(e.getSource() == vista.getBtnRegistrarCliente()) {
+			inciarRegistro();
+			vista.crearVistaRegistroCliente(this);
+			return;
+		}
 		// if(e.getSource() == vista.getBtnRegistrarCliente()) {
 		// 	vista.crearVistaRegistro(this);
 		// }
+		
+		if (vista.getVistaAgregarCliente() != null && e.getSource() == vista.getVistaAgregarCliente().getBtnGuardar()) {
+			vista.getVistaAgregarCliente().getLblError().setText(" ");
+			String nombre = vista.getVistaAgregarCliente().getTxtNombre().getText().trim();
+			String domicilio = vista.getVistaAgregarCliente().getTxtDomicilio().getText().trim();
+			String celCasa = vista.getVistaAgregarCliente().getTxtCelCasa().getText().trim();
+			String celPersonal = vista.getVistaAgregarCliente().getTxtCelPersonal().getText().trim();
+			String email = vista.getVistaAgregarCliente().getTxtEmail().getText().trim();
+			if (nombre.isEmpty() || domicilio.isEmpty() || celPersonal.isEmpty() || email.isEmpty()) {
+				vista.getVistaAgregarCliente().getLblError().setText("Todos los campos son obligatorios excepto Tel. casa.");
+				return;
+			}
+			datosCliente(nombre, domicilio, celCasa, celPersonal, email);
+			JOptionPane.showMessageDialog(vista.getVistaAgregarCliente(), "Cliente registrado correctamente.");
+			vista.getVistaAgregarCliente().dispose();
+			vista.crearVistaRegistroMascota(this);
+			return;
+		}
 		if (e.getSource() == vista.getVistaAgregarMascota().getBtnGuardar()) {
 			vista.getVistaAgregarMascota().getLblError().setText(" ");
 			String clienteTexto = vista.getVistaAgregarMascota().getTxtCliente().getText().trim();
@@ -75,6 +99,7 @@ public class RegistroController implements ActionListener{
 				return;
 			}
 			registrarMascota(nombre, raza, tipo, sexo, edad, peso, color);
+			return;
 		}
 	}
 }
