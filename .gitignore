@@ -3,3 +3,4 @@
 .metadata/
 .settings/
 *.class
+src/includes/enviroment.java
