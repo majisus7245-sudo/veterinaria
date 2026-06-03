@@ -4,6 +4,7 @@ import controllers.RegistroController;
 import includes.BD_clientes;
 import includes.DataBase;
 import models.Cliente;
+import vistas.ViewRecepcionista;
 
 public class UC1 {
 
@@ -13,16 +14,17 @@ public class UC1 {
 			return;
 		}
 		
-		// RegistroController controlador = new RegistroController();
-		// controlador.inciarRegistro();
-		// System.out.println("Registro iniciado");
+//		RegistroController controlador = new RegistroController(new ViewRecepcionista());
+//		controlador.inciarRegistro();
+//		System.out.println("Registro iniciado");
+//		int id = BD_clientes.count();
+//		
+//		controlador.datosCliente("Pedrito" + id, "Culiacan", "1234567890", "1234567890", "correo@correo.com");
+//		
+//		controlador.registrarMascota("perro", "buldoser", "perro", "M", "2", "4", "negro");
+//		controlador.registrarMascota("gato", "miau", "miau", "M", "2", "4", "negro");
 		
-		// int id = BD_clientes.count();
-		
-		// controlador.datosCliente("Pedrito" + id, "Culiacan", "1234567890", "1234567890", "correo@correo.com");
-		// controlador.registrarMascota("perro", "buldoser", "perro", "M", "2", "4", "negro");
-		
-		// Cliente cliente = BD_clientes.where("nombre", "pedrito" + id);
+		BD_clientes.all();
 		
 	}
 

@@ -1,12 +1,10 @@
 package vistas;
 
 import javax.swing.*;
-
 import controllers.RegistroController;
-
 import java.awt.*;
 
-public class ViewAgregarCliente extends JFrame{
+public class ViewAgregarCliente extends JFrame {
     private JTextField txtNombre;
     private JTextField txtDomicilio;
     private JTextField txtCelCasa;
@@ -30,9 +28,11 @@ public class ViewAgregarCliente extends JFrame{
     private void crearInterfaz() {
         UIManager.put("TextField.font", new Font("SansSerif", Font.PLAIN, 16));
         UIManager.put("Button.font", new Font("SansSerif", Font.BOLD, 15));
+        
         JPanel contenedor = new JPanel(new GridBagLayout());
         contenedor.setBorder(BorderFactory.createEmptyBorder(24, 24, 24, 24));
         contenedor.setBackground(new Color(245, 249, 247));
+        
         JPanel tarjeta = new JPanel(new GridBagLayout());
         tarjeta.setBackground(Color.WHITE);
         tarjeta.setBorder(BorderFactory.createCompoundBorder(
@@ -40,10 +40,12 @@ public class ViewAgregarCliente extends JFrame{
             BorderFactory.createEmptyBorder(24, 24, 24, 24)
         ));
         tarjeta.setPreferredSize(new Dimension(640, 500));
+        
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(8, 10, 8, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
+        
         JLabel titulo = new JLabel("Agregar cliente");
         titulo.setFont(new Font("SansSerif", Font.BOLD, 28));
         titulo.setForeground(new Color(33, 43, 54));
@@ -51,6 +53,7 @@ public class ViewAgregarCliente extends JFrame{
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         tarjeta.add(titulo, gbc);
+        
         lblError = new JLabel(" ");
         lblError.setFont(new Font("SansSerif", Font.PLAIN, 13));
         lblError.setForeground(new Color(180, 30, 30));
@@ -105,7 +108,10 @@ public class ViewAgregarCliente extends JFrame{
         root.fill = GridBagConstraints.NONE;
         root.anchor = GridBagConstraints.CENTER;
         contenedor.add(tarjeta, root);
-        this.setContentPane(contenedor);
+        
+        JScrollPane scrollPane = new JScrollPane(contenedor);
+        scrollPane.setBorder(null);
+        this.setContentPane(scrollPane);
     }
 
     private void añadirCampo(JPanel tarjeta, GridBagConstraints gbc, int fila, int columna, String etiqueta, JComponent componente) {
@@ -145,5 +151,4 @@ public class ViewAgregarCliente extends JFrame{
     public JLabel getLblError() { return lblError; }
     public JButton getBtnGuardar() { return btnGuardar; }
     public JButton getBtnCerrar() { return btnCerrar; }
-
 }

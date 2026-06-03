@@ -40,8 +40,6 @@ public class Cliente {
 	public boolean nuevaMascota(String nombre, String raza, String tipo, String sexo, String edad, String peso, String color) {
 		Mascota mascota = new Mascota(id, nombre, raza, tipo, sexo, edad, peso, color);
 		
-		
-		
 		contenedorMascotas.InsertarFinal(mascota);
 		
 		return true;

@@ -75,7 +75,7 @@ public class BD_expedientes extends DataBase {
     }
     
     public static Integer count() {
-        String sql = "SELECT COUNT(*) FROM " + tabla;
+        String sql = "SELECT ISNULL(MAX(id), 0) FROM " + tabla;
         Integer count = 0;
         
         try (Statement stmt = DataBase.getConn().createStatement();

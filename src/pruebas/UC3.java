@@ -23,12 +23,12 @@ public class UC3 {
 		cita.setId(BD_cita.count());
 		
 		controlador.iniciarConsulta(cita.getId(), 2);
-		//mostrar datos mascota
+
 		System.out.println("MOTRANDO DATOS MASCOTA");
 		
 		Expediente expediente = controlador.consultarExpediente();
 		System.out.println(expediente.toString());
-		System.out.println("MOTRANDO DATOS EXPEDIENTE");
+		System.out.println("MOTRANDO DATOS EXPEDIENTE'''''''''''''''''''''");
 		
 		controlador.guardarInformacion("dolor de panza", "se comio un zapato", "debe reposar");
 		
