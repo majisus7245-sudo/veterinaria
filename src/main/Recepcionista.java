@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Recepcionista extends JFrame implements ActionListener{
+	
 	private JButton btnAgregarMascota;
 
 	public Recepcionista() {
@@ -15,7 +16,7 @@ public class Recepcionista extends JFrame implements ActionListener{
 		hazEscuchadores();
 		this.pack();
 		this.setLocationRelativeTo(null);
-    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	private void hazInterfaz() {
@@ -71,6 +72,7 @@ public class Recepcionista extends JFrame implements ActionListener{
 	private void hazEscuchadores() {
 		btnAgregarMascota.addActionListener(this);
 	}
+	
   @Override
   public void actionPerformed(ActionEvent e) {
     if(e.getSource() == btnAgregarMascota) {
