@@ -85,7 +85,16 @@ public class ConsultaController implements ActionListener {
 		}
 
 		detalleExpediente = construirDetalleExpediente();
-		Expediente expediente = consultarExpediente();
+
+		vistaRegistrarConsulta.mostrarDatosMascota(
+			mascota.getNombre(),
+			mascota.getTipo(),
+			mascota.getRaza(),
+			mascota.getSexo(),
+			mascota.getEdad(),
+			mascota.getPeso()
+		);
+
 		vistaRegistrarConsulta.getLblEstado().setText("Estado: cita cargada correctamente");
 	}
 
@@ -141,6 +150,7 @@ public class ConsultaController implements ActionListener {
 					mensaje = "No se pudo cargar la cita.";
 				}
 				vistaRegistrarConsulta.getLblError().setText(mensaje);
+				vistaRegistrarConsulta.limpiarDatosMascota();
 				detalleExpediente = null;
 				return;
 			}

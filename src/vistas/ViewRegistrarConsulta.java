@@ -18,6 +18,14 @@ public class ViewRegistrarConsulta extends JFrame {
 	private JButton btnGuardar;
 	private JButton btnCerrar;
 
+	private JPanel panelMascota;
+	private JLabel lblMascotaNombre;
+	private JLabel lblMascotaTipo;
+	private JLabel lblMascotaRaza;
+	private JLabel lblMascotaSexo;
+	private JLabel lblMascotaEdad;
+	private JLabel lblMascotaPeso;
+
 	public ViewRegistrarConsulta() {
 		super("Veterinaria - Registrar Consulta");
 		this.setMinimumSize(new Dimension(920, 620));
@@ -88,6 +96,43 @@ public class ViewRegistrarConsulta extends JFrame {
 		añadirCampo(tarjeta, gbc, fila, 0, "Diagnóstico", txtDiagnostico);
 		añadirCampoArea(tarjeta, gbc, fila, 2, "Observaciones", txtObservaciones);
 		fila += 3;
+
+		// Panel de información de la mascota
+		panelMascota = new JPanel(new GridLayout(2, 3, 16, 6));
+		panelMascota.setBackground(new Color(235, 245, 240));
+		panelMascota.setBorder(BorderFactory.createCompoundBorder(
+			BorderFactory.createTitledBorder(
+				BorderFactory.createLineBorder(new Color(180, 210, 195), 1, true),
+				"Datos de la mascota",
+				javax.swing.border.TitledBorder.LEFT,
+				javax.swing.border.TitledBorder.TOP,
+				new Font("SansSerif", Font.BOLD, 13),
+				new Color(33, 100, 70)
+			),
+			BorderFactory.createEmptyBorder(6, 12, 10, 12)
+		));
+
+		lblMascotaNombre = crearLabelDato("Nombre: —");
+		lblMascotaTipo   = crearLabelDato("Tipo: —");
+		lblMascotaRaza   = crearLabelDato("Raza: —");
+		lblMascotaSexo   = crearLabelDato("Sexo: —");
+		lblMascotaEdad   = crearLabelDato("Edad: —");
+		lblMascotaPeso   = crearLabelDato("Peso: —");
+
+		panelMascota.add(lblMascotaNombre);
+		panelMascota.add(lblMascotaTipo);
+		panelMascota.add(lblMascotaRaza);
+		panelMascota.add(lblMascotaSexo);
+		panelMascota.add(lblMascotaEdad);
+		panelMascota.add(lblMascotaPeso);
+
+		gbc.gridx = 0;
+		gbc.gridy = fila;
+		gbc.gridwidth = 4;
+		gbc.insets = new Insets(12, 10, 8, 10);
+		tarjeta.add(panelMascota, gbc);
+		gbc.insets = new Insets(8, 10, 8, 10);
+		fila++;
 
 		lblEstado = new JLabel("Estado: consulta pendiente de guardar");
 		lblEstado.setFont(new Font("SansSerif", Font.ITALIC, 13));
@@ -187,6 +232,33 @@ public class ViewRegistrarConsulta extends JFrame {
 		btnConsultar.addActionListener(controlador);
 		btnVerExpediente.addActionListener(controlador);
 		btnGuardar.addActionListener(controlador);
+	}
+
+	private JLabel crearLabelDato(String texto) {
+		JLabel lbl = new JLabel(texto);
+		lbl.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		lbl.setForeground(new Color(33, 43, 54));
+		return lbl;
+	}
+
+	public void mostrarDatosMascota(String nombre, String tipo, String raza, String sexo, String edad, String peso) {
+		lblMascotaNombre.setText("Nombre: " + nombre);
+		lblMascotaTipo.setText("Tipo: " + tipo);
+		lblMascotaRaza.setText("Raza: " + raza);
+		lblMascotaSexo.setText("Sexo: " + sexo);
+		lblMascotaEdad.setText("Edad: " + edad);
+		lblMascotaPeso.setText("Peso: " + peso);
+		panelMascota.revalidate();
+		panelMascota.repaint();
+	}
+
+	public void limpiarDatosMascota() {
+		lblMascotaNombre.setText("Nombre: —");
+		lblMascotaTipo.setText("Tipo: —");
+		lblMascotaRaza.setText("Raza: —");
+		lblMascotaSexo.setText("Sexo: —");
+		lblMascotaEdad.setText("Edad: —");
+		lblMascotaPeso.setText("Peso: —");
 	}
 
 	public JTextField getTxtIdCita() { return txtIdCita; }
