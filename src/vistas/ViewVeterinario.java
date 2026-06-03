@@ -2,13 +2,14 @@ package vistas;
 
 import javax.swing.*;
 
-import controllers.VeterinarioController;
+import controllers.ConsultaController;
 
 import java.awt.*;
 
 public class ViewVeterinario extends JFrame {
 
 	private JButton btnIniciarConsulta;
+	private JButton btnVerExpediente;
 
 	public ViewVeterinario() {
 		super("Veterinaria - Veterinario");
@@ -61,6 +62,15 @@ public class ViewVeterinario extends JFrame {
 		tarjeta.add(btnIniciarConsulta, gbc);
 
 		gbc.gridy++;
+		btnVerExpediente = new JButton("Ver expediente");
+		btnVerExpediente.setFocusPainted(false);
+		btnVerExpediente.setFont(new Font("SansSerif", Font.BOLD, 16));
+		btnVerExpediente.setBackground(new Color(35, 122, 85));
+		btnVerExpediente.setForeground(Color.WHITE);
+		btnVerExpediente.setBorder(BorderFactory.createEmptyBorder(12, 22, 12, 22));
+		tarjeta.add(btnVerExpediente, gbc);
+
+		gbc.gridy++;
 		JLabel ayuda = new JLabel("Presiona el botón para comenzar una consulta con una cita existente.", SwingConstants.CENTER);
 		ayuda.setFont(new Font("SansSerif", Font.PLAIN, 13));
 		ayuda.setForeground(new Color(120, 132, 140));
@@ -77,12 +87,17 @@ public class ViewVeterinario extends JFrame {
 		this.setContentPane(contenedor);
 	}
 
-	public void hazEscuchadores(VeterinarioController controlador) {
+	public void hazEscuchadores(ConsultaController controlador) {
 		btnIniciarConsulta.addActionListener(controlador);
+		btnVerExpediente.addActionListener(controlador);
 	}
 
 	public JButton getBtnIniciarConsulta() {
 		return btnIniciarConsulta;
+	}
+
+	public JButton getBtnVerExpediente() {
+		return btnVerExpediente;
 	}
 
 }

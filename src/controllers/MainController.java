@@ -22,7 +22,7 @@ public class MainController {
     }
     if("2".equals(usuario.getRol())){
       ViewVeterinario veterinario = new ViewVeterinario();
-      VeterinarioController controlador = new VeterinarioController(veterinario, usuario.getId());
+      ConsultaController controlador = new ConsultaController(veterinario, usuario.getId());
       veterinario.setVisible(true);
       vistaLogin.dispose();
       return;

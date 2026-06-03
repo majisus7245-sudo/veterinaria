@@ -2,7 +2,7 @@ package vistas;
 
 import javax.swing.*;
 
-import controllers.VeterinarioController;
+import controllers.ConsultaController;
 
 import java.awt.*;
 
@@ -13,6 +13,8 @@ public class ViewRegistrarConsulta extends JFrame {
 	private JTextArea txtObservaciones;
 	private JLabel lblEstado;
 	private JLabel lblError;
+	private JButton btnConsultar;
+	private JButton btnVerExpediente;
 	private JButton btnGuardar;
 	private JButton btnCerrar;
 
@@ -41,7 +43,7 @@ public class ViewRegistrarConsulta extends JFrame {
 			BorderFactory.createLineBorder(new Color(214, 226, 220), 1, true),
 			BorderFactory.createEmptyBorder(24, 24, 24, 24)
 		));
-		tarjeta.setPreferredSize(new Dimension(840, 520));
+		tarjeta.setPreferredSize(new Dimension(860, 620));
 
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(8, 10, 8, 10);
@@ -102,12 +104,24 @@ public class ViewRegistrarConsulta extends JFrame {
 		btnCerrar.setBackground(new Color(232, 239, 235));
 		btnCerrar.setForeground(new Color(54, 65, 80));
 		btnCerrar.setBorder(BorderFactory.createEmptyBorder(10, 18, 10, 18));
+		btnConsultar = new JButton("Consultar cita");
+		btnConsultar.setFocusPainted(false);
+		btnConsultar.setBackground(new Color(35, 122, 85));
+		btnConsultar.setForeground(Color.WHITE);
+		btnConsultar.setBorder(BorderFactory.createEmptyBorder(10, 18, 10, 18));
+		btnVerExpediente = new JButton("Ver expediente");
+		btnVerExpediente.setFocusPainted(false);
+		btnVerExpediente.setBackground(new Color(20, 90, 150));
+		btnVerExpediente.setForeground(Color.WHITE);
+		btnVerExpediente.setBorder(BorderFactory.createEmptyBorder(10, 18, 10, 18));
 		btnGuardar = new JButton("Guardar consulta");
 		btnGuardar.setFocusPainted(false);
 		btnGuardar.setBackground(new Color(20, 90, 150));
 		btnGuardar.setForeground(Color.WHITE);
 		btnGuardar.setBorder(BorderFactory.createEmptyBorder(10, 18, 10, 18));
 		acciones.add(btnCerrar);
+		acciones.add(btnConsultar);
+		acciones.add(btnVerExpediente);
 		acciones.add(btnGuardar);
 		gbc.gridy++;
 		tarjeta.add(acciones, gbc);
@@ -168,8 +182,10 @@ public class ViewRegistrarConsulta extends JFrame {
 		tarjeta.add(scroll, campos);
 	}
 
-	public void hazEscuchadores(VeterinarioController controlador) {
+	public void hazEscuchadores(ConsultaController controlador) {
 		btnCerrar.addActionListener(e -> dispose());
+		btnConsultar.addActionListener(controlador);
+		btnVerExpediente.addActionListener(controlador);
 		btnGuardar.addActionListener(controlador);
 	}
 
@@ -179,6 +195,8 @@ public class ViewRegistrarConsulta extends JFrame {
 	public JTextArea getTxtObservaciones() { return txtObservaciones; }
 	public JLabel getLblEstado() { return lblEstado; }
 	public JLabel getLblError() { return lblError; }
+	public JButton getBtnConsultar() { return btnConsultar; }
+	public JButton getBtnVerExpediente() { return btnVerExpediente; }
 	public JButton getBtnGuardar() { return btnGuardar; }
 	public JButton getBtnCerrar() { return btnCerrar; }
 

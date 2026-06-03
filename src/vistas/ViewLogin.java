@@ -245,15 +245,6 @@ public class ViewLogin extends JFrame implements ActionListener{
 			errorNombre.setText("");
 			errorPassword.setText("");
 			mainController.redireccional(usuario);
-			// if("1".equals(usuario.getRol())){
-			// 	JOptionPane.showMessageDialog(this, "Bienvenido, recepcionista.", "Login", JOptionPane.INFORMATION_MESSAGE);
-			// 	ViewRecepcionista recepcionista = new ViewRecepcionista();
-			// 	recepcionista.setVisible(true);
-			// 	this.dispose();
-			// 	return;
-			// }
-			// JOptionPane.showMessageDialog(this, "Este usuario no tiene acceso a la pantalla de recepción.", "Login", JOptionPane.WARNING_MESSAGE);
-			
 		}
 	}
 	private static class FondoPanel extends JPanel {

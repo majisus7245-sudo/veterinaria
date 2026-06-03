@@ -32,9 +32,10 @@ public class Consulta {
 		reciboPago = BD_recibosPago.where("consulta", id +"");
 	}
 	
-	public String toString() {
-		return id + " " + fecha;
-	}
+	// @Override
+	// public String toString() {
+	// 	return id + " " + fecha;
+	// }
 	
 	public void setInformacion(String sintomas, String diagnostico, String observaciones) {
 		this.sintomas = sintomas;
@@ -131,5 +132,8 @@ public class Consulta {
 	public String getValues() {
 		return "'" + expediente + "', '" + veterinario + "', '" + sintomas + "', '" + diagnostico + "', '" + observaciones + "', '" + fecha + "'";
 	}
-
+	@Override
+	public String toString(){
+		return "Consulta{id=" + id + ", expediente=" + expediente + ", veterinario=" + veterinario + ", sintomas='" + sintomas + "', diagnostico='" + diagnostico + "', observaciones='" + observaciones + "', fecha='" + fecha + "'}";
+	}
 }
